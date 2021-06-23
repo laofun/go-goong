@@ -33,6 +33,7 @@ package main
 
 import (
 	"log"
+  "context"
 
 	"github.com/kr/pretty"
 	"github.com/laofun/go-goong"
@@ -48,7 +49,7 @@ func main() {
 	r := &places.AutoCompleteOpts{
 		Input: "quan 1",
 	}
-	resp, err := client.Places.Autocomplete(r)
+	resp, err := client.Places.Autocomplete(context.Background(),r)
 
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)

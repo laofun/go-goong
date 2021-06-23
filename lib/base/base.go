@@ -1,6 +1,7 @@
 package base
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -49,7 +50,7 @@ type GoongApiError struct {
 }
 
 // QueryRequest make a get with the provided query string and return the response if successful
-func (b *Base) QueryRequest(query string, v *url.Values) (*http.Response, error) {
+func (b *Base) QueryRequest(ctx context.Context, query string, v *url.Values) (*http.Response, error) {
 	// Add api_key to args
 	v.Set("api_key", b.apiKey)
 
@@ -93,9 +94,9 @@ func (b *Base) QueryRequest(query string, v *url.Values) (*http.Response, error)
 
 // QueryBase Query the Goong API and fill the provided instance with the returned JSON
 // TODO: Rename this
-func (b *Base) QueryBase(query string, v *url.Values, inst interface{}) error {
+func (b *Base) QueryBase(ctx context.Context, query string, v *url.Values, inst interface{}) error {
 	// Make request
-	resp, err := b.QueryRequest(query, v)
+	resp, err := b.QueryRequest(ctx, query, v)
 	if err != nil && (resp == nil || resp.StatusCode != http.StatusBadRequest) {
 		return err
 	}
@@ -128,8 +129,8 @@ func (b *Base) QueryBase(query string, v *url.Values, inst interface{}) error {
 
 // Query the Goong API
 // TODO: Depreciate this
-func (b *Base) Query(api, mode string, v *url.Values, inst interface{}) error {
+func (b *Base) Query(ctx context.Context, api, mode string, v *url.Values, inst interface{}) error {
 	// Generate URL
 	queryString := fmt.Sprintf("%s/%s", api, mode)
-	return b.QueryBase(queryString, v, inst)
+	return b.QueryBase(ctx, queryString, v, inst)
 }

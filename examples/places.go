@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -38,13 +39,15 @@ func main() {
 		Limit:    *limit,
 	}
 
-	resp, err := client.Places.Autocomplete(r)
+	resp, err := client.Places.Autocomplete(context.Background(), r)
 	check(err)
 
 	pretty.Println("places.AutoComplete:", resp)
 
 	if len(resp.Predictions) > 0 {
-		detail, err := client.Places.Detail(&places.DetailOpts{PlaceID: resp.Predictions[0].PlaceID})
+		detail, err := client.Places.Detail(context.Background(), &places.DetailOpts{
+			PlaceID: resp.Predictions[0].PlaceID,
+		})
 		check(err)
 
 		pretty.Println("places.Detail:", detail)

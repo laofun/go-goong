@@ -3,6 +3,8 @@
 package places
 
 import (
+	"context"
+
 	"github.com/google/go-querystring/query"
 	"github.com/laofun/go-goong/lib/base"
 )
@@ -37,13 +39,13 @@ type AutoCompleteResponse struct {
 
 // Places Search by keyword with autocomplete
 // Return predictions according to search keyword
-func (g *Places) Autocomplete(req *AutoCompleteOpts) (*AutoCompleteResponse, error) {
+func (g *Places) Autocomplete(ctx context.Context, req *AutoCompleteOpts) (*AutoCompleteResponse, error) {
 	v, err := query.Values(req)
 	if err != nil {
 		return nil, err
 	}
 	resp := AutoCompleteResponse{}
-	err = g.base.Query(apiName, apiAutocomplete, &v, &resp)
+	err = g.base.Query(ctx, apiName, apiAutocomplete, &v, &resp)
 
 	return &resp, err
 }
@@ -59,14 +61,14 @@ type DetailResponse struct {
 
 // Get place detail by Id
 // Return detail of a place by it's place_id
-func (g *Places) Detail(req *DetailOpts) (*DetailResponse, error) {
+func (g *Places) Detail(ctx context.Context, req *DetailOpts) (*DetailResponse, error) {
 	v, err := query.Values(req)
 	if err != nil {
 		return nil, err
 	}
 	resp := DetailResponse{}
 
-	err = g.base.Query(apiName, apiDetail, &v, &resp)
+	err = g.base.Query(ctx, apiName, apiDetail, &v, &resp)
 
 	return &resp, err
 }
