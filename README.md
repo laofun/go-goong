@@ -1,34 +1,59 @@
 # go-goong
  goong.io API wrappers for Golang
 
-See [here](https://docs.goong.io/rest) for for API information.
 
 ### Modules
 - [X] Places
 - [ ] Geocoding
 - [ ] Directions
 
-## Examples
-### Initialisation
-```go
-import (
-  "github.com/laofun/go-goong/lib"
-  "github.com/laofun/go-goong/lib/base"
-)
-// Fetch apikey from somewhere
-apiKey := os.Getenv("GOONG_API_KEY")
+**Important:** This key should be kept secret on your server.
 
-// Create new MAP instance
-client := goong.NewGoong(apiKey)
+## Installation
 
+To install the Go Client for Goong API, please execute the following `go get` command.
+
+```bash
+    go get github.com/laofun/go-goong
 ```
-### Places API
+
+## Developer Documentation
+
+View the [reference documentation](https://docs.goong.io/rest) for for API information.
+
+## Requirements
+
+- Go 1.14 or later.
+- A Goong API key.
+
+## Usage
+
 ```go
+package main
+
 import (
-  "github.com/laofun/go-goong/lib/places"
+	"log"
+
+	"github.com/kr/pretty"
+	"github.com/laofun/go-goong"
+	"github.com/laofun/go-goong/lib/places"
 )
 
-placeData, err := client.Places.Autocomplete(&places.AutoCompleteOpts{
-  Input: "quan 1"
-})
+func main() {
+	client, err := goong.NewClient("Insert-API-Key-Here")
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+
+	r := &places.AutoCompleteOpts{
+		Input: "quan 1",
+	}
+	resp, err := client.Places.Autocomplete(r)
+
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+
+	pretty.Println(resp)
+}
 ```

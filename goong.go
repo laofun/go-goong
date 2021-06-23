@@ -5,15 +5,15 @@ import (
 	"github.com/laofun/go-goong/lib/places"
 )
 
-// Goong API Wrapper structure
-type Goong struct {
+// Client may be used to make requests to the Goong API
+type Client struct {
 	base   *base.Base
 	Places *places.Places
 }
 
-// NewGoong Create a new Goong API instance
-func NewGoong(apiKey string) (*Goong, error) {
-	m := &Goong{}
+// NewClient constructs a new Client Goong API
+func NewClient(apiKey string) (*Client, error) {
+	m := &Client{}
 	// Create base instance
 	base, err := base.NewBase(apiKey)
 	if err != nil {
