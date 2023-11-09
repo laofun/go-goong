@@ -21,6 +21,8 @@ type Predictions struct {
 	DisplayType          string               `json:"display_type"`
 	Score                float64              `json:"score"`
 	PlusCode             PlusCode             `json:"plus_code"`
+	Types                []string             `json:"types"`
+	DistanceMeters       *int                 `json:"distance_meters,omitempty"`
 }
 
 type Location struct {
@@ -35,4 +37,6 @@ type PlaceDetailResult struct {
 	FormattedAddress string   `json:"formatted_address"`
 	Geometry         Geometry `json:"geometry"`
 	Name             string   `json:"name"`
+	Types            []string `json:"types"`
+	DistanceMeters   *int     `json:"distance_meters,omitempty"`
 }
